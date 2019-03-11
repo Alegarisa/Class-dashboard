@@ -1,0 +1,81 @@
+---
+title: "class dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(plotly)
+```
+
+Sidebar Title {.sidebar}
+==========
+Your text here. You can use markdown syntax, including 
+[links](http://blah.com), *italics*, **bolding**, etc.
+
+When having different pages, use equal signs. 
+
+# First page
+
+Column {data-width=850}
+----------------------
+
+This is some text. 
+
+### Chart A
+
+```{r}
+p <- ggplot(mtcars, aes(mpg, cyl)) +
+  geom_point()
+
+ggplotly(p)
+```
+
+> Here is an interactive plot
+
+Column {data-width=150} {.tabset}
+------------------------
+### Chart B
+
+```{r}
+ggplot(mtcars, aes(mpg, cyl)) +
+  geom_line()
+
+
+```
+
+### Extra chart
+
+```{r}
+d <- diamonds[sample(nrow(diamonds), 500), ]
+plot_ly(d, x = d$carat, y = d$price, 
+        text = paste("Clarity: ", d$clarity),
+        mode = "markers", color = d$carat, size = d$carat)
+```
+
+
+# Years {data-icon="fa-calendar"}
+
+Column {data-width=650}
+----------------
+
+### Chart C
+
+```{r}
+ggplot(iris, aes(Petal.Width)) +
+  geom_histogram(fill = "purple", color = "white")
+
+```
+
+### Chart D
+
+```{r}
+ggplot(iris, aes(Petal.Width, Petal.Length)) +
+  geom_line(method = "lm")
+
+```
+
